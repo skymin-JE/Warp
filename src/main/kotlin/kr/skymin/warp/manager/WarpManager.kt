@@ -11,9 +11,6 @@ object WarpManager {
 
 	private val config = File(Loader.INSTANCE.dataFolder.path, "Config.json")
 
-	val warpCount: Int
-		get() = warps.size
-
 	val warpNames: MutableSet<String>
 		get() = warps.keys
 
