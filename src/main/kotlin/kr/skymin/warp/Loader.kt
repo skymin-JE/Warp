@@ -39,6 +39,18 @@ class Loader: JavaPlugin() {
 		kommand {
 			register("warp"){
 				requires { isPlayer }
+				executes {
+					var usage = "\n"
+					if(player.isOp){
+						usage += "/warp create <name: string> [isOp: bool] - 워프를 생성합니다.\n"
+						usage += "/warp remove <name: string> - 워프를 제거 합니다.\n"
+						usage += "/warp teleport_op <name: string> - 해당 워프로 순간 이동합니다.\n"
+					} else {
+						usage += "/warp teleport <name: string> - 해당 워프로 순간 이동 합니다.\n"
+					}
+					usage += "/warp list [page: int] - 이동 가능한 워프들을 확인합니다."
+					player.sendMessage(usage)
+				}
 				// 생성
 				then("create"){
 					requires { isOp }
@@ -98,7 +110,7 @@ class Loader: JavaPlugin() {
 					executes {
 						Executor.onViewList(player)
 					}
-					then("page" to int(minimum = 1)){
+					then("page" to int()){
 						executes {
 							Executor.onViewList(player, it["page"])
 						}
@@ -107,6 +119,7 @@ class Loader: JavaPlugin() {
 			}
 		}
 		val cmd: Command? = server.commandMap.getCommand("warp")
-		if(cmd !== null) cmd.setDescription("워프 명령어")
+		if(cmd === null) return
+		cmd.setDescription("워프 명령어")
 	}
 }
