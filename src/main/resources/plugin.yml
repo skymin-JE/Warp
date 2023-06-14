@@ -2,7 +2,7 @@ name: Warp
 version: 1.0.1
 api-version: 1.17
 main: kr.skymin.warp.Loader
-author: found-cake
+author: skymin
 
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:1.8.21
