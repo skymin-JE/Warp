@@ -1,5 +1,5 @@
 name: Warp
-version: 1.0.1
+version: 1.0.2
 api-version: 1.17
 main: kr.skymin.warp.Loader
 author: skymin
