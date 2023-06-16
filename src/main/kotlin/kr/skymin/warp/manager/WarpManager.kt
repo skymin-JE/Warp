@@ -1,6 +1,7 @@
 package kr.skymin.warp.manager
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kr.skymin.warp.Loader
 import java.io.File
@@ -32,7 +33,11 @@ object WarpManager {
 	}
 
 	fun save() {
-		config.writeText(Gson().toJson(warps))
+		val gson: Gson = GsonBuilder()
+			.setPrettyPrinting()
+			.disableHtmlEscaping()
+			.create()
+		config.writeText(gson.toJson(warps))
 	}
 
 	fun getWarp(name: String): Warp?{
