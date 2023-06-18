@@ -1,9 +1,8 @@
 package kr.skymin.warp.command
 
-import kr.skymin.warp.event.WarpEvent
+import kr.skymin.warp.event.WarpTeleportEvent
 import kr.skymin.warp.manager.Warp
 import kr.skymin.warp.manager.WarpManager
-import kr.skymin.warp.utils.pos2str
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import kotlin.math.ceil
@@ -12,13 +11,7 @@ object Executor {
 
 	//생성
 	fun onCreate(player: Player, name: String, isOp: Boolean = false) {
-		val result: Boolean = WarpManager.addWarp(
-			Warp(
-				name = name,
-				position = pos2str(player.location),
-				isOp = isOp
-			)
-		)
+		val result: Boolean = WarpManager.addWarp(name, player.location, isOp)
 		if(result) {
 			player.sendMessage("성공적으로 추가되었습니다.")
 		} else {
@@ -41,7 +34,7 @@ object Executor {
 			val pos: Location = warp.positionParser
 			pos.yaw = player.location.yaw
 			pos.pitch = player.location.pitch
-			if(WarpEvent(player, warp).callEvent()) {
+			if(WarpTeleportEvent(player, warp).callEvent()) {
 				player.teleport(pos)
 				player.sendMessage("이동되었습니다.")
 			}

@@ -4,6 +4,10 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kr.skymin.warp.Loader
+import kr.skymin.warp.event.WarpCreateEvent
+import kr.skymin.warp.event.WarpRemoveEvent
+import kr.skymin.warp.utils.pos2str
+import org.bukkit.Location
 import java.io.File
 
 object WarpManager {
@@ -53,12 +57,19 @@ object WarpManager {
 			return false
 		}
 		warps[warp.name] = warp
+		WarpCreateEvent(warp).callEvent()
 		return true
 	}
 
+	fun addWarp(name: String, position: Location, isOp: Boolean): Boolean{
+		return addWarp(Warp(name, pos2str(position), isOp))
+	}
+
 	fun removeWarp(name: String) {
-		if(warps.containsKey(name)) {
+		val warp: Warp? = warps[name]
+		if(warp !== null) {
 			warps.remove(name)
+			WarpRemoveEvent(warp).callEvent()
 		}
 	}
 }
