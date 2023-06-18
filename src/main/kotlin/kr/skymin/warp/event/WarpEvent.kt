@@ -10,8 +10,4 @@ abstract class WarpEvent(val warp: Warp): Event() {
 	override fun getHandlers(): HandlerList {
 		return handlers
 	}
-
-	fun getWarp() : Warp{
-		return warp
-	}
 }

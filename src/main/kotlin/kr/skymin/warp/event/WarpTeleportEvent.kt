@@ -14,8 +14,4 @@ class WarpTeleportEvent(val player: Player, warp: Warp): WarpEvent(warp), Cancel
 	override fun setCancelled(cancel: Boolean) {
 		cancelled = cancel
 	}
-
-	fun getPlayer(): Player{
-		return player
-	}
 }
