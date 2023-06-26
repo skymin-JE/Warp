@@ -11,7 +11,11 @@ object Executor {
 
 	//생성
 	fun onCreate(player: Player, name: String, isOp: Boolean = false) {
-		val result: Boolean = WarpManager.addWarp(name, player.location, isOp)
+		val result: Boolean = WarpManager.addWarp{
+			warpName = name
+			position = player.location
+			this.isOp = isOp
+		}
 		if(result) {
 			player.sendMessage("성공적으로 추가되었습니다.")
 		} else {

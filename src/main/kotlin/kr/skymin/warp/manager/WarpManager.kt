@@ -61,6 +61,11 @@ object WarpManager {
 		return true
 	}
 
+	fun addWarp(warpDsl: WarpDsl.() -> Unit): Boolean{
+		val warp: Warp = WarpDsl().apply(warpDsl).build()
+		return addWarp(warp)
+	}
+
 	fun addWarp(name: String, position: Location, isOp: Boolean): Boolean{
 		return addWarp(Warp(name, pos2str(position), isOp))
 	}

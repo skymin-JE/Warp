@@ -4,10 +4,10 @@ import kr.skymin.warp.manager.WarpManager
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.kommand
 import kr.skymin.warp.command.Executor
-import net.kyori.adventure.text.Component.text
 import org.bukkit.command.Command
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.RuntimeException
+import net.kyori.adventure.text.Component.text
 
 class Loader: JavaPlugin() {
 
@@ -38,6 +38,14 @@ class Loader: JavaPlugin() {
 	private fun registerCommands() {
 		kommand {
 			register("warp"){
+				val opWarpNames = string(StringType.QUOTABLE_PHRASE)
+				opWarpNames.suggests {
+					suggest(WarpManager.warpNames)
+				}
+				val warps = string(StringType.QUOTABLE_PHRASE)
+				warps.suggests {
+					suggest(WarpManager.canUserWarps)
+				}
 				requires { isPlayer }
 				executes {
 					var usage = "\n"
@@ -65,14 +73,6 @@ class Loader: JavaPlugin() {
 						}
 					}
 				}
-				/** argument 생성 */
-				val opWarpNames = string(StringType.QUOTABLE_PHRASE)
-				opWarpNames.suggests {
-					suggest(WarpManager.warpNames){
-						text(it)
-					}
-				}
-				/****************/
 				// 삭제
 				then("remove"){
 					requires { isOp }
@@ -93,12 +93,7 @@ class Loader: JavaPlugin() {
 				}
 				then("teleport") {
 					requires { !isOp }
-					val warps = string(StringType.QUOTABLE_PHRASE)
-					warps.suggests {
-						suggest(WarpManager.canUserWarps){
-							text(it)
-						}
-					}
+
 					then("name" to warps){
 						executes {
 							Executor.onTeleport(player, it["name"])
