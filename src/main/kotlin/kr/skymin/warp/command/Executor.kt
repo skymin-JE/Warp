@@ -9,7 +9,6 @@ import kotlin.math.ceil
 
 object Executor {
 
-	//생성
 	fun onCreate(player: Player, name: String, isOp: Boolean = false) {
 		val result: Boolean = WarpManager.addWarp{
 			warpName = name
